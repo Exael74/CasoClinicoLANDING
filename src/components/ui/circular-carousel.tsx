@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type TouchEvent,
+} from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -118,6 +124,22 @@ export function CircularCarousel<T extends CarouselItem>({
     return () => el?.removeEventListener("keydown", handler)
   }, [next, prev])
 
+  const touchStartX = useRef<number | null>(null)
+
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartX.current = e.touches[0]?.clientX ?? null
+  }
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    if (touchStartX.current === null) return
+    const endX = e.changedTouches[0]?.clientX ?? touchStartX.current
+    const delta = endX - touchStartX.current
+    const threshold = 40
+    if (delta > threshold) prev()
+    else if (delta < -threshold) next()
+    touchStartX.current = null
+  }
+
   if (!total) return null
   const activeItem = items[activeIndex]!
 
@@ -139,8 +161,10 @@ export function CircularCarousel<T extends CarouselItem>({
     >
       {/* Circular track */}
       <div
-        className="relative w-full max-w-lg"
+        className="relative w-full max-w-lg touch-pan-y"
         style={{ height: stageHeight }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <AnimatePresence mode="popLayout">
           {items.map((item, i) => {
