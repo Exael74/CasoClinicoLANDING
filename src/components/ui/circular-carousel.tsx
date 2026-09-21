@@ -181,7 +181,7 @@ export function CircularCarousel<T extends CarouselItem>({
                 aria-selected={isActive}
                 role="option"
                 className={cn(
-                  "absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-start justify-between rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-800/90 to-zinc-900/90 p-4 backdrop-blur-sm transition-shadow duration-300",
+                  "absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-start justify-between rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-800/90 to-zinc-900/90 p-2.5 backdrop-blur-sm transition-shadow duration-300 sm:p-4",
                   isActive
                     ? "shadow-[0_20px_60px_-12px_rgba(0,0,0,0.5)]"
                     : "shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.4)]"
@@ -193,7 +193,7 @@ export function CircularCarousel<T extends CarouselItem>({
                 }}
               >
                 {item.tag && (
-                  <span className="rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-medium tracking-wider text-white/70 uppercase">
+                  <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium tracking-wider text-white/70 uppercase sm:px-3.5 sm:py-1.5 sm:text-sm">
                     {item.tag}
                   </span>
                 )}
@@ -201,14 +201,16 @@ export function CircularCarousel<T extends CarouselItem>({
                   <h3
                     className={cn(
                       "font-semibold leading-tight transition-colors duration-300",
-                      isActive ? "text-3xl text-white" : "text-xl text-white/80"
+                      isActive
+                        ? "text-sm text-white sm:text-3xl"
+                        : "text-xs text-white/80 sm:text-xl"
                     )}
                   >
                     {item.title}
                   </h3>
                   <p
                     className={cn(
-                      "mt-2 line-clamp-2 text-base leading-relaxed transition-colors duration-300 sm:text-lg",
+                      "mt-1 line-clamp-2 text-[11px] leading-snug transition-colors duration-300 sm:mt-2 sm:text-lg sm:leading-relaxed",
                       isActive ? "text-white/60" : "text-white/40"
                     )}
                   >
@@ -229,10 +231,10 @@ export function CircularCarousel<T extends CarouselItem>({
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center"
       >
-        <span className="text-7xl font-bold tracking-tight text-white/90 sm:text-8xl">
+        <span className="text-3xl font-bold tracking-tight text-white/90 sm:text-8xl">
           {String(activeIndex + 1).padStart(2, "0")}
         </span>
-        <span className="mt-1 text-sm text-white/40 sm:text-base">
+        <span className="mt-1 text-[11px] text-white/40 sm:text-base">
           de {String(total).padStart(2, "0")}
         </span>
       </motion.div>

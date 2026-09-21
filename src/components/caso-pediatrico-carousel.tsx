@@ -46,13 +46,14 @@ export function CasoPediatricoCarousel() {
           stageHeight: 560,
         }
       : {
-          // Fewer cards on screen at once on mobile so it doesn't feel crowded.
+          // Fewer cards on screen at once on mobile, pushed further from the
+          // center counter, so nothing overlaps or feels crowded.
           visibleCount: 3,
-          radiusX: 160,
-          radiusY: 70,
-          cardWidth: 210,
-          cardHeight: 170,
-          stageHeight: 340,
+          radiusX: 175,
+          radiusY: 140,
+          cardWidth: 200,
+          cardHeight: 160,
+          stageHeight: 460,
         }
 
   const openCard = useMemo(
