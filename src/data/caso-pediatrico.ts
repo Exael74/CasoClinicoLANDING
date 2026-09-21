@@ -60,18 +60,6 @@ export type TextoLargoCard = CaseCardBase & {
   factores?: { facilitadores: string[]; barrera: string[] }
 }
 
-export type EnlaceCard = CaseCardBase & {
-  tipo: "enlace"
-  tituloBanda: string
-  url?: string
-}
-
-export type ReferenciasCard = CaseCardBase & {
-  tipo: "referencias"
-  tituloBanda: string
-  referencias: string[]
-}
-
 export type QrPlaceholderCard = CaseCardBase & {
   tipo: "qr-placeholder"
   tituloBanda: string
@@ -89,16 +77,7 @@ export type CaseCard =
   | ColumnasCard
   | ListaNumeradaCard
   | TextoLargoCard
-  | EnlaceCard
-  | ReferenciasCard
   | QrPlaceholderCard
-
-export const CITATION_NAMES = [
-  "Varios Autores, 2023",
-  "Cucalón et al., 2025",
-  "Morales, 2022",
-  "Gutiérrez et al., 2020",
-]
 
 export const CASE_CARDS: CaseCard[] = [
   {
@@ -300,25 +279,6 @@ export const CASE_CARDS: CaseCard[] = [
   },
   {
     id: 12,
-    tipo: "enlace",
-    tituloBanda: "Página web",
-    resumen: "Enlace al sitio del caso (próximamente).",
-    url: undefined,
-  },
-  {
-    id: 13,
-    tipo: "referencias",
-    tituloBanda: "Bibliografía",
-    resumen: "Referencias citadas en el pronóstico (pendientes por completar).",
-    referencias: [
-      "Cucalón et al. (2025). [Referencia pendiente por completar]",
-      "Gutiérrez et al. (2020). [Referencia pendiente por completar]",
-      "Morales (2022). [Referencia pendiente por completar]",
-      "Varios Autores (2023). [Referencia pendiente por completar]",
-    ],
-  },
-  {
-    id: 14,
     tipo: "qr-placeholder",
     tituloBanda: "Metagrafo",
     etiqueta: "Metagrafo",
@@ -327,7 +287,7 @@ export const CASE_CARDS: CaseCard[] = [
     url: "https://www.canva.com/design/DAHVIhHIVbw/AtMWZYC_OHixhVl6tYAOpA/edit",
   },
   {
-    id: 15,
+    id: 13,
     tipo: "qr-placeholder",
     tituloBanda: "Matriz",
     etiqueta: "Matriz",
@@ -352,8 +312,6 @@ export const TAG_BY_TIPO: Record<CaseCard["tipo"], string> = {
   columnas: "Perfil",
   "lista-numerada": "Hipótesis",
   "texto-largo": "Análisis clínico",
-  enlace: "Enlace",
-  referencias: "Bibliografía",
   "qr-placeholder": "Código QR",
 }
 

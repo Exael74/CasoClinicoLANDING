@@ -2,7 +2,7 @@ import { useState, type ReactNode } from "react"
 import { ExternalLink, QrCode, X } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { cardTitulo, TAG_BY_TIPO, type CaseCard } from "@/data/caso-pediatrico"
-import { highlightCifCodes, renderBold, renderWithCitations } from "@/lib/case-text"
+import { highlightCifCodes, renderBold } from "@/lib/case-text"
 
 function CardHeader({ card }: { card: CaseCard }) {
   return (
@@ -32,13 +32,7 @@ function InfoNote({ children }: { children: ReactNode }) {
   )
 }
 
-export function CaseCardDetail({
-  card,
-  onJumpToReferences,
-}: {
-  card: CaseCard
-  onJumpToReferences: () => void
-}) {
+export function CaseCardDetail({ card }: { card: CaseCard }) {
   const [zoomSrc, setZoomSrc] = useState<string | null>(null)
 
   switch (card.tipo) {
@@ -53,7 +47,7 @@ export function CaseCardDetail({
             nombre ni número de documento.
           </p>
           <p className="mt-3 text-sm text-white/40 sm:text-base">
-            Usa las flechas o los puntos de navegación para recorrer las 15
+            Usa las flechas o los puntos de navegación para recorrer las 13
             cartas del caso.
           </p>
         </div>
@@ -282,7 +276,7 @@ export function CaseCardDetail({
           ) : null}
           <div className="max-h-[45vh] space-y-4 overflow-y-auto pr-1 text-base leading-relaxed text-white/70 sm:text-lg">
             {card.parrafos.map((p, i) => (
-              <p key={i}>{renderWithCitations(p, onJumpToReferences)}</p>
+              <p key={i}>{highlightCifCodes(p)}</p>
             ))}
           </div>
           {card.factores ? (
@@ -334,41 +328,6 @@ export function CaseCardDetail({
               dolor percibida por el paciente.
             </InfoNote>
           ) : null}
-        </div>
-      )
-
-    case "enlace":
-      return (
-        <div>
-          <CardHeader card={card} />
-          {card.url ? (
-            <a
-              href={card.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-rose-300/15 px-5 py-2.5 text-base font-semibold text-rose-300 transition-colors hover:bg-rose-300/25"
-            >
-              Visitar página web <ExternalLink className="h-5 w-5" />
-            </a>
-          ) : (
-            <p className="text-base text-white/50">
-              El enlace a la página web se agregará próximamente.
-            </p>
-          )}
-        </div>
-      )
-
-    case "referencias":
-      return (
-        <div>
-          <CardHeader card={card} />
-          <ul className="space-y-3 text-base text-white/70 sm:text-lg">
-            {card.referencias.map((ref) => (
-              <li key={ref} className="pl-6 -indent-6">
-                {highlightCifCodes(ref)}
-              </li>
-            ))}
-          </ul>
         </div>
       )
 

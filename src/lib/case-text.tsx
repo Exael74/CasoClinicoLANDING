@@ -1,11 +1,4 @@
 import type { ReactNode } from "react"
-import { CITATION_NAMES } from "@/data/caso-pediatrico"
-
-const CITATION_SET = new Set(CITATION_NAMES)
-const CITATION_PATTERN = new RegExp(
-  `(${CITATION_NAMES.map(escapeRegExp).join("|")})`,
-  "g"
-)
 
 const CIF_CODES = [
   "s73001",
@@ -45,27 +38,6 @@ export function highlightCifCodes(text: string): ReactNode[] {
       </strong>
     ) : (
       chunk
-    )
-  )
-}
-
-/** Turns known author-year citations into clickable jumps to the references card. */
-export function renderWithCitations(
-  text: string,
-  onJumpToReferences: () => void
-): ReactNode[] {
-  return text.split(CITATION_PATTERN).map((chunk, i) =>
-    CITATION_SET.has(chunk) ? (
-      <button
-        key={i}
-        type="button"
-        onClick={onJumpToReferences}
-        className="font-medium text-rose-300 underline underline-offset-2 hover:text-rose-200"
-      >
-        {chunk}
-      </button>
-    ) : (
-      <span key={i}>{highlightCifCodes(chunk)}</span>
     )
   )
 }

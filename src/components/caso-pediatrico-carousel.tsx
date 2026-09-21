@@ -85,10 +85,7 @@ export function CasoPediatricoCarousel() {
               <DialogTitle className="sr-only">
                 {cardTitulo(openCard)}
               </DialogTitle>
-              <CaseCardDetail
-                card={openCard}
-                onJumpToReferences={() => setOpenId(13)}
-              />
+              <CaseCardDetail card={openCard} />
             </>
           ) : null}
         </DialogContent>
