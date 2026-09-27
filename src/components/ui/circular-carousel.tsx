@@ -218,21 +218,16 @@ export function CircularCarousel<T extends CarouselItem>({
                   transformOrigin: "center center",
                 }}
               >
-                <div className="flex w-full items-start justify-between gap-2">
-                  {item.tag && (
-                    <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium tracking-wider text-white/70 uppercase sm:px-3.5 sm:py-1.5 sm:text-sm">
-                      {item.tag}
-                    </span>
-                  )}
-                  {item.icon && (
+                {item.icon && (
+                  <div className="flex w-full justify-center">
                     <img
                       src={item.icon}
                       alt=""
                       aria-hidden="true"
-                      className="size-10 shrink-0 rounded-xl bg-[#f8fbff] object-cover shadow-md sm:size-20"
+                      className="size-16 shrink-0 rounded-2xl bg-[#f8fbff] object-cover shadow-md sm:size-28"
                     />
-                  )}
-                </div>
+                  </div>
+                )}
                 <div className="w-full">
                   <h3
                     className={cn(

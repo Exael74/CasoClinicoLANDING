@@ -1,27 +1,22 @@
 import { useState, type ReactNode } from "react"
 import { ExternalLink, X } from "lucide-react"
-import { cardTitulo, TAG_BY_TIPO, type CaseCard } from "@/data/caso-pediatrico"
+import { cardTitulo, type CaseCard } from "@/data/caso-pediatrico"
 import { highlightCifCodes, renderBold } from "@/lib/case-text"
 import { TimelineFlow } from "@/components/caso-pediatrico/timeline-flow"
 import { FamilyGenogram } from "@/components/caso-pediatrico/family-genogram"
 
 function CardHeader({ card }: { card: CaseCard }) {
   return (
-    <div className="mb-6 flex items-center gap-4 sm:gap-5">
+    <div className="mb-6 flex flex-col items-center gap-3 text-center sm:gap-4">
       <img
         src={card.icon}
         alt=""
         aria-hidden="true"
-        className="size-16 shrink-0 rounded-2xl bg-[#f8fbff] object-cover shadow-lg sm:size-24"
+        className="size-20 shrink-0 rounded-2xl bg-[#f8fbff] object-cover shadow-lg sm:size-28"
       />
-      <div>
-        <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold tracking-wider text-white/70 uppercase">
-          {TAG_BY_TIPO[card.tipo]}
-        </span>
-        <h2 className="mt-2 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
-          {cardTitulo(card)}
-        </h2>
-      </div>
+      <h2 className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+        {cardTitulo(card)}
+      </h2>
     </div>
   )
 }
