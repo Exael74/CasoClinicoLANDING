@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react"
+import { useState } from "react"
 import { ExternalLink, X } from "lucide-react"
 import { cardTitulo, type CaseCard } from "@/data/caso-pediatrico"
 import { highlightCifCodes, renderBold } from "@/lib/case-text"
@@ -17,21 +17,6 @@ function CardHeader({ card }: { card: CaseCard }) {
       <h2 className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
         {cardTitulo(card)}
       </h2>
-    </div>
-  )
-}
-
-/** A clearly-labeled aside for general, verifiable medical/educational
- * background — never patient-specific facts that aren't already in the case. */
-function InfoNote({ children }: { children: ReactNode }) {
-  return (
-    <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4 sm:p-5">
-      <span className="mb-1.5 block text-xs font-semibold tracking-wide text-rose-300 uppercase">
-        Contexto clínico general
-      </span>
-      <p className="text-sm leading-relaxed text-white/70 sm:text-base">
-        {children}
-      </p>
     </div>
   )
 }
@@ -264,15 +249,6 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
               </tbody>
             </table>
           </div>
-
-          <InfoNote>
-            <strong className="text-white/80">ROM</strong> (range of motion /
-            rango de movimiento) es la amplitud de movimiento que alcanza una
-            articulación. La <strong className="text-white/80">escala MRC</strong>{" "}
-            (Medical Research Council) califica la fuerza muscular de 0 a 5,
-            donde 5/5 es fuerza normal contra resistencia y 0/5 es ausencia
-            total de contracción visible.
-          </InfoNote>
         </div>
       )
 
