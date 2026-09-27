@@ -231,7 +231,7 @@ export function CircularCarousel<T extends CarouselItem>({
                 <div className="w-full">
                   <h3
                     className={cn(
-                      "font-semibold leading-tight transition-colors duration-300",
+                      "line-clamp-2 font-semibold leading-tight transition-colors duration-300",
                       isActive
                         ? "text-sm text-white sm:text-3xl"
                         : "text-xs text-white/80 sm:text-xl"

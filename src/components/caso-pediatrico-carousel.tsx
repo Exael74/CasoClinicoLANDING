@@ -30,31 +30,33 @@ export function CasoPediatricoCarousel() {
   const isSm = useMediaQuery("(min-width: 640px)")
 
   // Sized for a classroom projector: large cards and a wide arc.
+  // Card heights include headroom for the bigger centered icon plus a
+  // 2-line title and 2-line description on the longest card content.
   const sizing = isLg
     ? {
         radiusX: 680,
-        radiusY: 280,
+        radiusY: 300,
         cardWidth: 440,
-        cardHeight: 300,
-        stageHeight: 820,
+        cardHeight: 340,
+        stageHeight: 900,
       }
     : isSm
       ? {
           radiusX: 420,
-          radiusY: 190,
+          radiusY: 210,
           cardWidth: 300,
-          cardHeight: 220,
-          stageHeight: 560,
+          cardHeight: 260,
+          stageHeight: 660,
         }
       : {
           // Fewer cards on screen at once on mobile, pushed further from the
           // center counter, so nothing overlaps or feels crowded.
           visibleCount: 3,
           radiusX: 175,
-          radiusY: 140,
+          radiusY: 150,
           cardWidth: 200,
-          cardHeight: 160,
-          stageHeight: 460,
+          cardHeight: 190,
+          stageHeight: 500,
         }
 
   const openCard = useMemo(
