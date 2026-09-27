@@ -13,6 +13,7 @@ import iconDiagnostico from "@/assets/icons/diagnostico.png"
 import iconPronostico from "@/assets/icons/pronostico.png"
 import iconMetagrafo from "@/assets/icons/metagrafo.png"
 import iconMatriz from "@/assets/icons/matriz.png"
+import iconReferencias from "@/assets/icons/referencias.png"
 
 export type CaseCardBase = {
   id: number
@@ -42,7 +43,6 @@ export type ImagenCard = CaseCardBase & {
 export type LineaTiempoCard = CaseCardBase & {
   tipo: "linea-de-tiempo"
   tituloBanda: string
-  hitos: { fecha: string; subtitulo?: string; puntos: string[] }[]
 }
 
 export type TextoCortoCard = CaseCardBase & {
@@ -101,8 +101,8 @@ export const CASE_CARDS: CaseCard[] = [
     presentacion: {
       titulo: "Presentación del paciente",
       parrafos: [
-        "Paciente masculino de 10 años, estudiante de quinto de primaria, con diagnóstico de fractura supracondílea del húmero izquierdo tras una caída durante actividad física. Requirió inmovilización con férula durante tres semanas y, después de este periodo, se retiró la férula e inició su proceso de rehabilitación fisioterapéutica.",
-        "Actualmente presenta dolor 8/10, limitación de la movilidad y disminución de la fuerza del miembro superior izquierdo, además de dolor escapular asociado a compensaciones posturales.",
+        "Paciente masculino de 10 años, estudiante de quinto de primaria, con diagnóstico de fractura supracondílea del húmero izquierdo tras una caída durante actividad física. Requirió inmovilización con férula durante tres semanas y, después de este período, se retiró la férula e inició su proceso de rehabilitación fisioterapéutica.",
+        "Actualmente presenta dolor 8/10 e hiperalgesia en el miembro superior izquierdo, además de limitación de la movilidad y disminución de la fuerza. También presenta dolor escapular asociado a compensaciones posturales.",
         "Vive con sus padres, hermana y abuela en Bogotá, cuenta con apoyo familiar y su principal expectativa es recuperar el movimiento del brazo y volver a jugar fútbol.",
       ],
     },
@@ -131,11 +131,11 @@ export const CASE_CARDS: CaseCard[] = [
     tipo: "imagen",
     tituloBanda: "Diagnóstico médico",
     subtitulo: "Imagen relacionada con la lesión",
-    resumen: "Fractura supracondílea de húmero izquierdo (tipo extensión).",
+    resumen: "Fractura supracondílea de húmero izquierdo (tipo flexión).",
     imagenes: [
       {
         src: lesion1,
-        alt: "Ilustración anatómica del codo izquierdo con fractura supracondílea de húmero de tipo extensión",
+        alt: "Ilustración anatómica del codo izquierdo con fractura supracondílea de húmero de tipo flexión",
       },
       {
         src: lesion2,
@@ -172,35 +172,6 @@ export const CASE_CARDS: CaseCard[] = [
     tipo: "linea-de-tiempo",
     tituloBanda: "Cronología de la patología",
     resumen: "Del 14/07/26 al 05/08/26: caída, diagnóstico e inicio de fisioterapia.",
-    hitos: [
-      {
-        fecha: "14/07/26",
-        puntos: [
-          "Caída durante actividad física.",
-          "Impacto directo en codo izquierdo.",
-          "Dolor intenso + edema + limitación funcional.",
-          "Radiografía: fractura supracondílea de húmero izquierdo.",
-          "Sin signos de derrame articular.",
-          "Remisión a Ortopedia.",
-        ],
-      },
-      {
-        fecha: "15/07/26",
-        subtitulo: "Diagnóstico confirmado",
-        puntos: ["Inmovilización con férula de yeso.", "Control en 3 semanas."],
-      },
-      {
-        fecha: "05/08/26",
-        puntos: [
-          "Retiro de férula.",
-          "Consolidación ósea satisfactoria.",
-          "Inicio de fisioterapia.",
-          "Dolor en codo y región interescapular.",
-          "Molestias asociadas a inmovilización y compensación postural.",
-          "Objetivo: recuperar movilidad y función.",
-        ],
-      },
-    ],
   },
   {
     id: 7,
@@ -315,6 +286,15 @@ export const CASE_CARDS: CaseCard[] = [
     etiqueta: "Matriz",
     resumen: "Abre la matriz del caso.",
     url: "https://docs.google.com/spreadsheets/d/15-35GMLYdfI55oC_VXUgVpSTB_G_A1Lc/edit?gid=1247960741#gid=1247960741",
+  },
+  {
+    id: 14,
+    icon: iconReferencias,
+    tipo: "qr-placeholder",
+    tituloBanda: "Referencias adicionales",
+    etiqueta: "Referencias adicionales",
+    resumen: "Abre las referencias adicionales del caso.",
+    url: "https://docs.google.com/document/d/1ZiDFMlfueyyseNp6eKp12Uh8wtpE_TU1OSVLVmRQguk/edit?usp=sharing",
   },
 ]
 

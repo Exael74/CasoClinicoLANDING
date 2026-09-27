@@ -168,6 +168,24 @@ export function CircularCarousel<T extends CarouselItem>({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
+        <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={prev}
+          aria-label="Anterior"
+          className="absolute top-1/2 left-0 z-20 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white/30 sm:left-2"
+        >
+          <ChevronLeft className="size-7" />
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={next}
+          aria-label="Siguiente"
+          className="absolute top-1/2 right-0 z-20 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white/30 sm:right-2"
+        >
+          <ChevronRight className="size-7" />
+        </motion.button>
         <AnimatePresence mode="popLayout">
           {items.map((item, i) => {
             const pos = getItemPosition(
@@ -270,46 +288,23 @@ export function CircularCarousel<T extends CarouselItem>({
         </span>
       </motion.div>
 
-      {/* Controls */}
-      <div className="flex items-center gap-5">
-        <motion.button
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={prev}
-          aria-label="Anterior"
-          className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white/30"
-        >
-          <ChevronLeft className="size-7" />
-        </motion.button>
-
-        {/* Dot indicators */}
-        <div className="flex flex-wrap items-center justify-center gap-2" role="tablist">
-          {items.map((it, i) => (
-            <button
-              key={it.id}
-              role="tab"
-              aria-selected={i === activeIndex}
-              onClick={() => goTo(i)}
-              className={cn(
-                "h-2.5 rounded-full transition-all duration-300",
-                i === activeIndex
-                  ? "w-10 bg-white/80"
-                  : "w-2.5 bg-white/20 hover:bg-white/40"
-              )}
-              aria-label={`Ir al elemento ${i + 1}`}
-            />
-          ))}
-        </div>
-
-        <motion.button
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={next}
-          aria-label="Siguiente"
-          className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white/30"
-        >
-          <ChevronRight className="size-7" />
-        </motion.button>
+      {/* Dot indicators */}
+      <div className="flex flex-wrap items-center justify-center gap-2" role="tablist">
+        {items.map((it, i) => (
+          <button
+            key={it.id}
+            role="tab"
+            aria-selected={i === activeIndex}
+            onClick={() => goTo(i)}
+            className={cn(
+              "h-2.5 rounded-full transition-all duration-300",
+              i === activeIndex
+                ? "w-10 bg-white/80"
+                : "w-2.5 bg-white/20 hover:bg-white/40"
+            )}
+            aria-label={`Ir al elemento ${i + 1}`}
+          />
+        ))}
       </div>
     </div>
   )

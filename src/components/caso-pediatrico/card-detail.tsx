@@ -2,8 +2,8 @@ import { useState, type ReactNode } from "react"
 import { ExternalLink, X } from "lucide-react"
 import { cardTitulo, type CaseCard } from "@/data/caso-pediatrico"
 import { highlightCifCodes, renderBold } from "@/lib/case-text"
-import { TimelineFlow } from "@/components/caso-pediatrico/timeline-flow"
 import { FamilyGenogram } from "@/components/caso-pediatrico/family-genogram"
+import cronologiaDiagrama from "@/assets/cronologia-diagrama.png"
 
 function CardHeader({ card }: { card: CaseCard }) {
   return (
@@ -61,7 +61,7 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
             nombre ni número de documento.
           </p>
           <p className="mt-3 text-sm text-white/40 sm:text-base">
-            Usa las flechas o los puntos de navegación para recorrer las 13
+            Usa las flechas o los puntos de navegación para recorrer las 14
             cartas del caso.
           </p>
         </div>
@@ -118,16 +118,6 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
             Toca una imagen para ampliarla. Fuente: pendiente por confirmar.
           </p>
 
-          <InfoNote>
-            El codo es la articulación formada por la unión del húmero, el
-            radio y el cúbito. En las fracturas supracondíleas de tipo
-            extensión —como la de este caso— las estructuras en mayor riesgo
-            son el nervio mediano (en particular su rama interósea anterior),
-            el nervio radial y la arteria braquial, por su cercanía anatómica
-            al foco de fractura. Por eso la valoración neurovascular es parte
-            esencial del examen físico inicial en este tipo de lesiones.
-          </InfoNote>
-
           {zoomSrc ? (
             <div
               className="animate-in fade-in fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4 duration-300"
@@ -156,15 +146,42 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
       return (
         <div>
           <CardHeader card={card} />
-          <TimelineFlow hitos={card.hitos} />
+          <button
+            type="button"
+            onClick={() => setZoomSrc(cronologiaDiagrama)}
+            className="block w-full overflow-hidden rounded-xl border border-white/10 bg-white/95 p-2 transition-shadow duration-300 hover:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.6)] focus-visible:ring-2 focus-visible:ring-rose-300 sm:p-3"
+          >
+            <img
+              src={cronologiaDiagrama}
+              alt="Diagrama de flujo de la cronología de la patología: caída, diagnóstico, inmovilización con férula, retiro de férula e inicio de fisioterapia"
+              className="w-full"
+            />
+          </button>
+          <p className="mt-3 text-sm text-white/40 sm:text-base">
+            Toca el diagrama para ampliarlo.
+          </p>
 
-          <InfoNote>
-            Las fracturas supracondíleas de húmero clasificadas como Gartland
-            tipo I (sin desplazamiento significativo) suelen tratarse de forma
-            conservadora, con inmovilización durante aproximadamente 3 a 4
-            semanas seguida de rehabilitación progresiva — un curso
-            consistente con el manejo descrito en este caso.
-          </InfoNote>
+          {zoomSrc ? (
+            <div
+              className="animate-in fade-in fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4 duration-300"
+              onClick={() => setZoomSrc(null)}
+            >
+              <button
+                type="button"
+                className="absolute top-4 right-4 text-white/80 transition-colors duration-200 hover:text-white"
+                onClick={() => setZoomSrc(null)}
+                aria-label="Cerrar"
+              >
+                <X className="h-8 w-8" />
+              </button>
+              <img
+                src={zoomSrc}
+                alt=""
+                className="animate-in zoom-in-95 max-h-full max-w-full rounded-lg object-contain duration-300"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+          ) : null}
         </div>
       )
 

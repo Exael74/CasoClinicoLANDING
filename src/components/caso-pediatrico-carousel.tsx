@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   CircularCarousel,
   type CarouselItem,
@@ -26,6 +26,33 @@ const ITEMS: CaseCarouselItem[] = CASE_CARDS.map((card) => ({
 
 export function CasoPediatricoCarousel() {
   const [openId, setOpenId] = useState<number | null>(null)
+  // Tracks whether the currently-open dialog pushed a history entry, so the
+  // phone/trackpad "back" gesture closes the card instead of leaving the site.
+  const pushedHistory = useRef(false)
+
+  useEffect(() => {
+    const onPopState = () => {
+      pushedHistory.current = false
+      setOpenId(null)
+    }
+    window.addEventListener("popstate", onPopState)
+    return () => window.removeEventListener("popstate", onPopState)
+  }, [])
+
+  const openCardById = useCallback((id: number) => {
+    window.history.pushState({ casoPediatricoCard: id }, "")
+    pushedHistory.current = true
+    setOpenId(id)
+  }, [])
+
+  const closeCard = useCallback(() => {
+    if (pushedHistory.current) {
+      pushedHistory.current = false
+      window.history.back()
+    }
+    setOpenId(null)
+  }, [])
+
   const isLg = useMediaQuery("(min-width: 1024px)")
   const isSm = useMediaQuery("(min-width: 640px)")
 
@@ -71,13 +98,13 @@ export function CasoPediatricoCarousel() {
         autoPlay={false}
         className="max-w-none"
         {...sizing}
-        onActiveSelect={(item) => setOpenId(item.card.id)}
+        onActiveSelect={(item) => openCardById(item.card.id)}
       />
 
       <Dialog
         open={openCard !== null}
         onOpenChange={(open) => {
-          if (!open) setOpenId(null)
+          if (!open) closeCard()
         }}
       >
         <DialogContent
