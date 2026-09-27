@@ -20,6 +20,7 @@ const ITEMS: CaseCarouselItem[] = CASE_CARDS.map((card) => ({
   title: cardTitulo(card),
   description: card.resumen,
   tag: TAG_BY_TIPO[card.tipo],
+  icon: card.icon,
   card,
 }))
 
@@ -78,7 +79,7 @@ export function CasoPediatricoCarousel() {
         }}
       >
         <DialogContent
-          className="dark max-h-[94vh] w-full max-w-[95vw] overflow-y-auto border border-white/10 bg-gradient-to-b from-zinc-800/95 to-zinc-900/95 p-6 text-white ring-0 backdrop-blur-md duration-300 sm:p-8 lg:max-w-[1400px] lg:p-10"
+          className="dark max-h-[94vh] w-full max-w-[95vw] overflow-y-auto border border-sky-200/15 bg-gradient-to-b from-[#16336b]/95 to-[#0a1a3d]/95 p-6 text-white ring-0 backdrop-blur-md duration-300 sm:p-8 lg:max-w-[1400px] lg:p-10"
         >
           {openCard ? (
             <>

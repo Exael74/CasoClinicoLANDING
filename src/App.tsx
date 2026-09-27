@@ -25,7 +25,7 @@ function App() {
         />
       )}
 
-      <main className="dark relative flex min-h-svh w-full items-center justify-center overflow-x-hidden bg-black px-4 py-10">
+      <main className="dark relative flex min-h-svh w-full items-center justify-center overflow-x-hidden bg-gradient-to-b from-[#0b1f4d] via-[#081a40] to-[#040f2b] px-4 py-10">
         <StarfieldBackground />
         <div className="relative z-10 mx-auto w-full max-w-[1600px]">
           <CasoPediatricoCarousel />

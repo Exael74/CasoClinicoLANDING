@@ -14,6 +14,8 @@ export interface CarouselItem {
   title: string
   description: string
   tag?: string
+  /** Optional illustration shown on the card. */
+  icon?: string
 }
 
 export interface CircularCarouselProps<T extends CarouselItem> {
@@ -205,7 +207,7 @@ export function CircularCarousel<T extends CarouselItem>({
                 aria-selected={isActive}
                 role="option"
                 className={cn(
-                  "absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-start justify-between rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-800/90 to-zinc-900/90 p-2.5 backdrop-blur-sm transition-shadow duration-300 sm:p-4",
+                  "absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-start justify-between rounded-2xl border border-sky-200/15 bg-gradient-to-b from-[#16336b]/90 to-[#0c1f47]/90 p-2.5 backdrop-blur-sm transition-shadow duration-300 sm:p-4",
                   isActive
                     ? "shadow-[0_20px_60px_-12px_rgba(0,0,0,0.5)]"
                     : "shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.4)]"
@@ -216,11 +218,21 @@ export function CircularCarousel<T extends CarouselItem>({
                   transformOrigin: "center center",
                 }}
               >
-                {item.tag && (
-                  <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium tracking-wider text-white/70 uppercase sm:px-3.5 sm:py-1.5 sm:text-sm">
-                    {item.tag}
-                  </span>
-                )}
+                <div className="flex w-full items-start justify-between gap-2">
+                  {item.tag && (
+                    <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium tracking-wider text-white/70 uppercase sm:px-3.5 sm:py-1.5 sm:text-sm">
+                      {item.tag}
+                    </span>
+                  )}
+                  {item.icon && (
+                    <img
+                      src={item.icon}
+                      alt=""
+                      aria-hidden="true"
+                      className="size-10 shrink-0 rounded-xl bg-[#f8fbff] object-cover shadow-md sm:size-20"
+                    />
+                  )}
+                </div>
                 <div className="w-full">
                   <h3
                     className={cn(

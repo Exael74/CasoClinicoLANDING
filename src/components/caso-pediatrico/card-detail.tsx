@@ -1,18 +1,27 @@
 import { useState, type ReactNode } from "react"
-import { ExternalLink, QrCode, X } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { ExternalLink, X } from "lucide-react"
 import { cardTitulo, TAG_BY_TIPO, type CaseCard } from "@/data/caso-pediatrico"
 import { highlightCifCodes, renderBold } from "@/lib/case-text"
+import { TimelineFlow } from "@/components/caso-pediatrico/timeline-flow"
+import { FamilyGenogram } from "@/components/caso-pediatrico/family-genogram"
 
 function CardHeader({ card }: { card: CaseCard }) {
   return (
-    <div className="mb-6">
-      <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold tracking-wider text-white/70 uppercase">
-        {TAG_BY_TIPO[card.tipo]}
-      </span>
-      <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
-        {cardTitulo(card)}
-      </h2>
+    <div className="mb-6 flex items-center gap-4 sm:gap-5">
+      <img
+        src={card.icon}
+        alt=""
+        aria-hidden="true"
+        className="size-16 shrink-0 rounded-2xl bg-[#f8fbff] object-cover shadow-lg sm:size-24"
+      />
+      <div>
+        <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold tracking-wider text-white/70 uppercase">
+          {TAG_BY_TIPO[card.tipo]}
+        </span>
+        <h2 className="mt-2 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+          {cardTitulo(card)}
+        </h2>
+      </div>
     </div>
   )
 }
@@ -40,6 +49,16 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
       return (
         <div>
           <CardHeader card={card} />
+          <section className="mb-6 rounded-xl border border-sky-200/15 bg-white/5 p-5 sm:p-6">
+            <h3 className="mb-3 text-lg font-bold text-rose-300 sm:text-xl">
+              {card.presentacion.titulo}
+            </h3>
+            <div className="space-y-3 text-base leading-relaxed text-white/80 sm:text-lg">
+              {card.presentacion.parrafos.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+          </section>
           <p className="text-base leading-relaxed text-white/70 sm:text-lg">
             Caso clínico pediátrico de fractura supracondílea de húmero
             izquierdo, presentado por estudiantes de la Universidad del
@@ -142,28 +161,7 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
       return (
         <div>
           <CardHeader card={card} />
-          <div className="flex flex-col gap-4 sm:flex-row sm:gap-4">
-            {card.hitos.map((hito) => (
-              <div
-                key={hito.fecha}
-                className="flex-1 rounded-xl border border-white/10 bg-white/5 p-4"
-              >
-                <div className="text-base font-bold text-rose-300 sm:text-lg">
-                  {hito.fecha}
-                </div>
-                {hito.subtitulo ? (
-                  <div className="mb-1 text-sm font-semibold text-white/60 sm:text-base">
-                    {hito.subtitulo}
-                  </div>
-                ) : null}
-                <ul className="mt-1 list-disc space-y-1.5 pl-4 text-sm text-white/70 sm:text-base">
-                  {hito.puntos.map((punto) => (
-                    <li key={punto}>{punto}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <TimelineFlow hitos={card.hitos} />
 
           <InfoNote>
             Las fracturas supracondíleas de húmero clasificadas como Gartland
@@ -195,6 +193,7 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
               {card.parrafo ? renderBold(card.parrafo) : null}
             </p>
           )}
+          {card.grafico === "familia" ? <FamilyGenogram /> : null}
         </div>
       )
 
@@ -225,34 +224,34 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
       return (
         <div>
           <CardHeader card={card} />
-          <ol className="space-y-3">
-            {card.items.map((item, i) => (
-              <li
-                key={item.tituloCorto}
-                className="flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4"
-              >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-rose-300/20 text-sm font-bold text-rose-300">
-                  {i + 1}
-                </span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-base font-semibold text-white sm:text-lg">
-                      {item.tituloCorto}
-                    </span>
-                    <Badge
-                      variant="outline"
-                      className="border-rose-300/40 text-rose-300"
-                    >
-                      {item.estado}
-                    </Badge>
-                  </div>
-                  <p className="mt-1.5 text-sm leading-relaxed text-white/60 sm:text-base">
-                    {item.texto}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <div className="overflow-x-auto rounded-xl border border-sky-200/20">
+            <table className="w-full min-w-[640px] border-collapse text-sm sm:text-base">
+              <thead>
+                <tr className="bg-sky-400/15 text-white">
+                  <th className="w-1/2 border-b border-r border-sky-200/20 px-4 py-3 text-center font-bold tracking-wide uppercase">
+                    Set de hipótesis
+                  </th>
+                  <th className="w-1/2 border-b border-sky-200/20 px-4 py-3 text-center font-bold tracking-wide uppercase">
+                    Hipótesis validada
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {card.items.map((item, i) => (
+                  <tr key={item.tituloCorto} className={i % 2 === 0 ? "bg-white/5" : ""}>
+                    <td className="border-r border-sky-200/20 px-4 py-3 align-top leading-relaxed text-white/80">
+                      <span className="mr-2 font-bold text-rose-300">{i + 1}.</span>
+                      {item.texto}
+                    </td>
+                    <td className="px-4 py-3 align-top leading-relaxed text-white/80">
+                      <span className="mr-2 font-bold text-rose-300">{i + 1}.</span>
+                      {item.texto}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <InfoNote>
             <strong className="text-white/80">ROM</strong> (range of motion /
@@ -274,60 +273,11 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
               Recuperación esperada: {card.destacado}
             </div>
           ) : null}
-          <div className="max-h-[45vh] space-y-4 overflow-y-auto pr-1 text-base leading-relaxed text-white/70 sm:text-lg">
+          <div className="space-y-4 text-base leading-relaxed text-white/70 sm:text-lg">
             {card.parrafos.map((p, i) => (
               <p key={i}>{highlightCifCodes(p)}</p>
             ))}
           </div>
-          {card.factores ? (
-            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-1.5 text-sm font-bold text-rose-300 uppercase sm:text-base">
-                  Factores facilitadores
-                </h4>
-                <ul className="list-disc space-y-1.5 pl-4 text-sm text-white/70 sm:text-base">
-                  {card.factores.facilitadores.map((f) => (
-                    <li key={f}>{f}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-1.5 text-sm font-bold text-rose-300 uppercase sm:text-base">
-                  Factores barrera
-                </h4>
-                <ul className="list-disc space-y-1.5 pl-4 text-sm text-white/70 sm:text-base">
-                  {card.factores.barrera.map((f) => (
-                    <li key={f}>{f}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ) : null}
-
-          {card.tituloBanda === "Diagnóstico" ? (
-            <InfoNote>
-              La CIF (Clasificación Internacional del Funcionamiento, de la
-              Discapacidad y de la Salud), publicada por la Organización
-              Mundial de la Salud, describe el estado de salud de una persona
-              en tres componentes: estructuras corporales (código s),
-              funciones corporales (código b), y actividad y participación
-              (código d), junto con factores contextuales ambientales (e) y
-              personales.
-            </InfoNote>
-          ) : null}
-
-          {card.tituloBanda === "Pronóstico" ? (
-            <InfoNote>
-              La clasificación de Gartland describe tres tipos de fractura
-              supracondílea según su desplazamiento: tipo I (no desplazada o
-              mínimamente desplazada), tipo II (desplazada con la cortical
-              posterior aún en contacto) y tipo III (completamente
-              desplazada). El tipo I —como en este caso— es el que tiene mejor
-              pronóstico y habitualmente no requiere manejo quirúrgico. La
-              Escala Visual Análoga (EVA) mide de 0 a 10 la intensidad del
-              dolor percibida por el paciente.
-            </InfoNote>
-          ) : null}
         </div>
       )
 
@@ -335,28 +285,19 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
       return (
         <div>
           <CardHeader card={card} />
-          <div className="flex flex-col items-center justify-center gap-5 py-6 text-center">
-            {card.qrSrc ? (
-              <img
-                src={card.qrSrc}
-                alt={`Código QR de ${card.etiqueta}`}
-                className="h-56 w-56 rounded-xl border border-white/10 bg-white p-3 sm:h-72 sm:w-72"
-              />
-            ) : (
-              <QrCode className="h-14 w-14 text-white/30" />
-            )}
+          <div className="flex flex-col items-center justify-center gap-6 py-10 text-center sm:py-16">
             {card.url ? (
               <a
                 href={card.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-rose-300/15 px-5 py-2.5 text-base font-semibold text-rose-300 transition-colors hover:bg-rose-300/25"
+                className="inline-flex w-full max-w-md items-center justify-center gap-3 rounded-2xl bg-rose-300 px-8 py-6 text-2xl font-bold text-[#0a1a3d] shadow-[0_0_0_6px_rgba(253,164,175,0.25)] transition-all duration-200 hover:scale-[1.03] hover:bg-rose-200 hover:shadow-[0_0_0_10px_rgba(253,164,175,0.3)] focus-visible:ring-4 focus-visible:ring-white/60 sm:w-auto sm:max-w-none sm:px-14 sm:py-8 sm:text-4xl"
               >
-                Abrir {card.etiqueta} <ExternalLink className="h-5 w-5" />
+                Abrir {card.etiqueta} <ExternalLink className="h-8 w-8 sm:h-11 sm:w-11" />
               </a>
             ) : (
               <p className="text-base text-white/50">
-                El código QR de {card.etiqueta} se agregará próximamente.
+                El enlace de {card.etiqueta} se agregará próximamente.
               </p>
             )}
           </div>
