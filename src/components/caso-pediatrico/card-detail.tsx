@@ -100,7 +100,7 @@ export function CaseCardDetail({ card }: { card: CaseCard }) {
             ))}
           </div>
           <p className="mt-3 text-sm text-white/40 sm:text-base">
-            Toca una imagen para ampliarla. Fuente: pendiente por confirmar.
+            Toca una imagen para ampliarla.
           </p>
 
           {zoomSrc ? (
